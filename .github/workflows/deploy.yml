@@ -1,8 +1,10 @@
 name: Deployment
+
 on:
   push:
     branches:
-      - main
+      - not_active
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,13 +34,23 @@ jobs:
       - name: Output contents
         run: ls
       - name: Deploy site
-        run: echo "Deploying..."
-  information:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: Run javascript custom action
         uses: ./.github/actions/deploy-aws-s3
-        
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+          AWS_BUCKET_PATH: ${{ secrets.AWS_BUCKET_PATH }}
+          AWS_DISTRIBUTION_ID: ${{ secrets.AWS_DISTRIBUTION_ID }}
+          AWS_CLOUDFRONT_INVALIDATION_PATH: ${{ secrets.AWS_CLOUDFRONT_INVALIDATION_PATH }}
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-bucket: ${{ secrets.AWS_BUCKET }}
+          aws-bucket-path: ${{ secrets.AWS_BUCKET_PATH }}
+          aws-distribution-id: ${{ secrets.AWS_DISTRIBUTION_ID }}
+          aws-cloudfront-invalidation-path: ${{ secrets.AWS_CLOUDFRONT_INVALIDATION_PATH }}
+
+  
        
