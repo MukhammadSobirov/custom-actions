@@ -1,0 +1,31 @@
+name: 'Deploy to AWS S3'
+description: 'Deploy to AWS S3'
+
+inputs:
+  aws-access-key-id:
+    description: 'AWS Access Key ID'
+    required: true
+  aws-secret-access-key:
+    description: 'AWS Secret Access Key'
+    required: true
+  aws-region:
+    description: 'AWS Region'
+    required: true
+  aws-bucket:
+    description: 'AWS Bucket'
+    required: true
+  aws-bucket-path:
+    description: 'AWS Bucket Path'
+    required: true
+  aws-distribution-id:
+    description: 'AWS Distribution ID'
+    required: true
+  aws-cloudfront-invalidation-path:
+    description: 'AWS CloudFront Invalidation Path'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
+  
